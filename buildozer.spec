@@ -13,7 +13,7 @@ package.domain = org.AuditoryTrustTest
 source.dir = .
 
 # (list) Source files to include (let empty to include all the files)
-source.include_exts = py,kv,atlas,png,jpg,ttf,wav,csv,jsoan
+source.include_exts = py,kv,atlas,png,jpg,ttf,wav,jsoan
 
 # (list) List of inclusions using pattern matching
 source.include_patterns = assets/*,images/*,sounds/*.wav
