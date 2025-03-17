@@ -593,11 +593,11 @@ LabelBase.register(name='font', fn_regular = path_font)
 
 class BaseScreen(Screen):
     def manual_get_display(self,reshaped_text):
-	# معکوس کردن رشته برای نمایش صحیح در محیط‌های چپ به راست
-    return reshaped_text[::-1]
+    # معکوس کردن رشته برای نمایش صحیح در محیط‌های چپ به راست
+        return reshaped_text[::-1]
     def reshape_text(self, text):
         reshaped_text = arabic_reshaper.reshape(text)
-        bidi_text = manual_get_display(reshaped_text)
+        bidi_text = self.manual_get_display(reshaped_text)
         return bidi_text
     
     def show_popup(self, message):
