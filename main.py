@@ -9,17 +9,19 @@ import arabic_reshaper
 from kivy.uix.popup import Popup
 from kivy.uix.label import Label
 from kivy.core.audio import SoundLoader
-import os,random, json
+from pandas import DataFrame
+import os, random
 from kivy.uix.textinput import TextInput
 from kivy.uix.button import Button
 from kivy.uix.boxlayout import BoxLayout
 from datetime import datetime
-from android.storage import primary_external_storage_path
+import json
 
-KV = """
-#:import os os
-windowsmanager:
-    MainPage:
+LabelBase.register(name='font', fn_regular='STITRBD.ttf')
+
+kv = """
+windowsmanager:	
+	MainPage:
 	SettingsPage:
 	StartPage:
 	FirstPage:
@@ -36,18 +38,20 @@ windowsmanager:
     allow_stretch:True
     keep_ratio: False
 
+      	
+
 <MainPage>:
-    name: "main"
+    name:"main"
     FloatLayout:
         orientation: 'vertical'
         size: root.width, root.height
 		
         Image:
-            source:os.path.join(os.path.dirname(__file__),"assets","images","Background.jpg")
+            source:'images/Background.jpg'
             allow_stretch:True
             keep_ratio: False
         Image:
-            source:os.path.join(os.path.dirname(__file__),"assets","images","ece_logo.png")
+            source:'images/ece_logo.png'
             allow_stretch:True
             keep_ratio: False
 			size_hint_x: 0.3
@@ -88,7 +92,7 @@ windowsmanager:
         orientation: 'vertical'
         size: root.width, root.height
         Image:
-            source:os.path.join(os.path.dirname(__file__),"assets","images","Background.jpg")
+            source:'images/Background.jpg'
             allow_stretch:True
             keep_ratio: False
 
@@ -282,7 +286,7 @@ windowsmanager:
             size_hint_x: 0.15
             size_hint_y: 0.1
             pos_hint:{'x':0.525, 'y':0.1}
-			on_release: root.DoTest()
+			on_release: root.btn()
 
         Label:
             text: root.reshape_text('انجام تست')
@@ -313,11 +317,11 @@ windowsmanager:
 		size: root.width, root.height
 		
 		Image:
-			source:os.path.join(os.path.dirname(__file__),"assets","images","Background.jpg")
+			source:'images/Background.jpg'
 			allow_stretch:True
 			keep_ratio: False
         Image:
-            source:os.path.join(os.path.dirname(__file__),"assets","images","ece_logo.png")
+            source:'images/ece_logo.png'
             allow_stretch:True
             keep_ratio: False
 			size_hint_x: 0.3
@@ -353,12 +357,12 @@ windowsmanager:
 		size: root.width, root.height
 		
 		Image:
-			source:os.path.join(os.path.dirname(__file__),"assets","images","Background.jpg")
+			source:'images/Background.jpg'
 			allow_stretch:True
 			keep_ratio: False
 
 		Image:
-            source:os.path.join(os.path.dirname(__file__),"assets","images","ece_logo.png")
+            source:'images/ece_logo.png'
             allow_stretch:True
             keep_ratio: False
 			size_hint_x: 0.3
@@ -381,6 +385,7 @@ windowsmanager:
 			
         Image:
             id: img
+			#source: "images/45 deg.png"
 			size_hint: 0.25, 0.3
 			pos_hint: {'center_x': 0.5, 'center_y': 0.5}					
 		
@@ -418,12 +423,12 @@ windowsmanager:
 		orientation: 'vertical'
 		size: root.width, root.height
 		Image:
-			source:os.path.join(os.path.dirname(__file__),"assets","images","Background.jpg")
+			source:'images/Background.jpg'
 			allow_stretch:True
 			keep_ratio: False
 
         Image:
-            source:os.path.join(os.path.dirname(__file__),"assets","images","ece_logo.png")
+            source:'images/ece_logo.png'
             allow_stretch:True
             keep_ratio: False
 			size_hint_x: 0.3
@@ -459,12 +464,12 @@ windowsmanager:
 		size: root.width, root.height
 		
 		Image:
-			source:os.path.join(os.path.dirname(__file__),"assets","images","Background.jpg")
+			source:'images/Background.jpg'
 			allow_stretch:True
 			keep_ratio: False
 
         Image:
-            source:os.path.join(os.path.dirname(__file__),"assets","images","ece_logo.png")
+            source:'images/ece_logo.png'
             allow_stretch:True
             keep_ratio: False
 			size_hint_x: 0.3
@@ -494,14 +499,15 @@ windowsmanager:
 			size_hint_y: 0.1
 			pos_hint:{'center_x':0.5, 'y':0.1}
 			color:(5/255,29/255, 53/255,1)
-					
+			
+			
 <LastPage>
 	name:"last"
 	FloatLayout:
 		orientation: 'vertical'
 		size: root.width, root.height
 		Image:
-			source:os.path.join(os.path.dirname(__file__),"assets","images","Background.jpg")
+			source:'images/Background.jpg'
 			allow_stretch:True
 			keep_ratio: False
 
@@ -587,9 +593,6 @@ windowsmanager:
             radius:[32]
 
 """
-
-
-LabelBase.register(name='font', fn_regular ="STITRBD.TTF")
 
 class BaseScreen(Screen):
     def manual_get_display(self,reshaped_text):
@@ -761,7 +764,7 @@ class FirstPage(BaseScreen):
         self.manager.list_sound[0] = spl_list[1]
         loc_list = self.manager.list_sound
         deg_sor = loc_list[0].split("_")[1]
-        self.img.source = os.path.join(os.path.dirname(__file__),"images" +deg_sor +".png")
+        self.img.source = "images/" +deg_sor +".png"
         self.ids.my_label.text = self.reshape_text(esm)
   
     is_unlocked = False  
@@ -822,8 +825,9 @@ class ContorolPage(BaseScreen):
 
     def on_enter(self):
         loc_list = self.manager.list_sound
-        direct = os.path.join(os.path.dirname(__file__),"sounds", loc_list[0] )  
+        direct = os.path.join("sounds", loc_list[0] )  
         self.sound = SoundLoader.load(direct)
+
     def dis_save(self,stop_time, speed):
         total_time = 10/speed
         stop_distance = 10 * (1 - stop_time / total_time)
@@ -932,13 +936,16 @@ class EndPage(BaseScreen):
 class LastPage(BaseScreen):
     def save_file(self):
         name = self.manager.patient_name_path
+        from android.storage import primary_external_storage_path
         folder = os.path.join(primary_external_storage_path(),"Download","Auditory Trust Test",name)
         os.makedirs(folder,exist_ok=True)
         namspl = name.split("_")
         user_info = {"نام": namspl[0],
             "تاریخ": namspl[1] ,  # فرمت استاندارد تاریخ
             "داده‌ها": self.manager.data_out}
-
+        dir_file_csv = os.path.join(folder,name+".csv")
+        df = DataFrame(self.manager.data_out)
+        df.to_csv(dir_file_csv, index=False, encoding='utf-8-sig') 
         dir_file_jason = os.path.join(folder,name+".json") 
         with open(dir_file_jason, "w", encoding="utf-8") as f:
             json.dump(user_info, f, indent=4, ensure_ascii=False)
@@ -969,10 +976,18 @@ class windowsmanager(ScreenManager):
     patient_name_path = "" 
     number_task = 0
     caracter = ''
+    data_out = {"شماره_آزمون":[],
+            "منبع_صدا":[],
+            "کاراکتر":[],
+            "جهت_پخش_صدا":[],
+            "سرعت_پخش":[],
+            "مدت_زمان_ثانیه":[],
+            'فاصله':[]}
+
 
 class AuditoryTrustTest(App):
     def build(self):
-        return Builder.load_file(KV)
+        return Builder.load_string(kv)
 
 if __name__ == "__main__":
     AuditoryTrustTest().run()
