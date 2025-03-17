@@ -63,8 +63,8 @@ jobs:
 
       - name: Upgrade setuptools
         run: |
-            pip uninstall bidi
-            pip install --no-cache-dir --target=.buildozer/android/app bidi
+            pip install --no-cache-dir --target=.buildozer/android/app arabic-reshaper python-bidi
+
 
 
       - name: Build APK
