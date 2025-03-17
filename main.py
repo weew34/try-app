@@ -588,8 +588,8 @@ windowsmanager:
 
 """
 
-path_font = os.path.join(os.path.dirname(__file__),"assets","STITRBD.ttf")
-LabelBase.register(name='font', fn_regular = path_font)
+
+LabelBase.register(name='font', fn_regular ="STITRBD.TTF")
 
 class BaseScreen(Screen):
     def manual_get_display(self,reshaped_text):
