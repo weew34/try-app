@@ -188,7 +188,7 @@ class FirstPage(BaseScreen):
         self.manager.list_sound[0] = spl_list[1]
         loc_list = self.manager.list_sound
         deg_sor = loc_list[0].split("_")[1]
-        self.img.source = os.path.join(os.path.dirname(__file__),"assets","images" +deg_sor +".png")
+        self.img.source = os.path.join(os.path.dirname(__file__),"images" +deg_sor +".png")
         self.ids.my_label.text = self.reshape_text(esm)
   
     is_unlocked = False  
@@ -379,7 +379,13 @@ class LastPage(BaseScreen):
     def save_continue(self):
         self.save_file()
         self.manager.number_task = 0
-        self.manager.data_out = {key: [] for key in ["شماره_آزمون", "جهت_پخش_صدا", "سرعت_پخش", "فاصله", "مدت_زمان_ثانیه", "منبع_صدا"]}
+        self.manager.data_out = {"شماره_آزمون":[],
+            "منبع_صدا":[],
+            "کاراکتر":[],
+            "جهت_پخش_صدا":[],
+            "سرعت_پخش":[],
+            "مدت_زمان_ثانیه":[],
+            'فاصله':[]}
 
         self.manager.transition.direction = "right"
         self.manager.current = "main"
@@ -396,8 +402,6 @@ class windowsmanager(ScreenManager):
 kv = Builder.load_file('main.kv')
 class AuditoryTrustTest(App):
     def build(self):
-        self.icon="images/icon.png"
-        Window.size = (1040, 650)
         return kv
 
 if __name__ == "__main__":
