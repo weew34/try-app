@@ -62,7 +62,10 @@ jobs:
             automake
 
       - name: Upgrade setuptools
-        run: pip install --upgrade setuptools
+        run: |
+            pip uninstall bidi
+            pip install --no-cache-dir --target=.buildozer/android/app bidi
+
 
       - name: Build APK
         uses: digreatbrian/buildozer-action@v2
