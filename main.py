@@ -16,8 +16,8 @@ from kivy.uix.boxlayout import BoxLayout
 from datetime import datetime
 import json
 
-LabelBase.register(name='font', fn_regular='STITRBD.ttf')
 
+LabelBase.register(name="font", fn_regular="BNaznnBd.ttf")
 kv = """
 windowsmanager:	
 	MainPage:
