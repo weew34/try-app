@@ -9,7 +9,6 @@ import arabic_reshaper
 from kivy.uix.popup import Popup
 from kivy.uix.label import Label
 from kivy.core.audio import SoundLoader
-from pandas import DataFrame
 import os, random
 from kivy.uix.textinput import TextInput
 from kivy.uix.button import Button
@@ -943,9 +942,6 @@ class LastPage(BaseScreen):
         user_info = {"نام": namspl[0],
             "تاریخ": namspl[1] ,  # فرمت استاندارد تاریخ
             "داده‌ها": self.manager.data_out}
-        dir_file_csv = os.path.join(folder,name+".csv")
-        df = DataFrame(self.manager.data_out)
-        df.to_csv(dir_file_csv, index=False, encoding='utf-8-sig') 
         dir_file_jason = os.path.join(folder,name+".json") 
         with open(dir_file_jason, "w", encoding="utf-8") as f:
             json.dump(user_info, f, indent=4, ensure_ascii=False)
